@@ -1,3 +1,5 @@
+import { auth, db } from 'boot/firebase';
+
 const state = {};
 const mutations = {};
 const actions = {};
