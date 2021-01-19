@@ -4,10 +4,10 @@ const state = {};
 const mutations = {};
 const actions = {
   registerUser({}, data) {
-		firebaseAuth.createUserWithEmailAndPassword(data.email, data.password)
+		auth.createUserWithEmailAndPassword(data.email, data.password)
 			.then(response => {
-				let userId = firebaseAuth.currentUser.uid
-				firebaseDb.ref('users/' + userId).set({
+				let userId = auth.currentUser.uid
+				db.ref('users/' + userId).set({
 					name: data.name,
 					email: data.email,
 					online: true
@@ -18,7 +18,7 @@ const actions = {
 			})
 	},
 	loginUser({}, data) {
-		firebaseAuth.signInWithEmailAndPassword(data.email, data.password)
+		auth.signInWithEmailAndPassword(data.email, data.password)
 			.then(response => {
 				console.log(response)
 			})
