@@ -25,9 +25,13 @@ const actions = {
 			.catch(error => {
 				console.log(error.message)
 			})		
+	},
+	handleAuthChange() {
+		console.log('Handle auth change called')
 	} 
 };
 const getters = {};
+
 export default{
   state,
   mutations,
