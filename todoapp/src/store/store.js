@@ -1,5 +1,4 @@
 import { auth, db } from 'boot/firebase';
-
 const state = {};
 const mutations = {};
 const actions = {
@@ -15,7 +14,7 @@ const actions = {
 			})
 			.catch(error => {
 				console.log(error.message)
-			})
+			});
 	},
 	loginUser({}, data) {
 		auth.signInWithEmailAndPassword(data.email, data.password)
@@ -24,14 +23,13 @@ const actions = {
 			})
 			.catch(error => {
 				console.log(error.message)
-			})		
+			});		
 	},
 	handleAuthChange() {
-		console.log('Handle auth change called')
-	} 
+		console.log('Handle auth change called!!');
+	},
 };
 const getters = {};
-
 export default{
   state,
   mutations,
