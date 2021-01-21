@@ -109,7 +109,7 @@ const actions = {
 	},
 	firebaseGetMessages({ commit, state }, otherUserId) {
 		let userId = state.userDetails.userId
-		messagesRef = firebaseDb.ref('chats/' + userId + '/' + otherUserId)
+		messagesRef = db.ref('chats/' + userId + '/' + otherUserId)
 		messagesRef.on('child_added', snapshot => {
 			let messageDetails = snapshot.val()
 			let messageId = snapshot.key
@@ -124,6 +124,11 @@ const actions = {
 			messagesRef.off('child_added')
 			commit('clearMessages')
 		}
+	},
+	firebaseSendMessage({}, data) {
+		db.ref('chats/' + state.userDetails.userId + '/' + data.otherUserId).push(data.message)
+		data.message.from = 'them'
+		db.ref('chats/' + data.otherUserId + '/' + state.userDetails.userId).push(data.message)
 	}
 };
 const getters = {

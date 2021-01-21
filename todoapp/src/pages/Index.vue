@@ -6,12 +6,12 @@
   	  <q-item
   	  	v-for="(user, key) in users"
   	  	:key="key"
-  	  	to="/chat"
+  	  	:to="'/chat/' + key"
   	  	clickable
   	  	v-ripple>
   	    <q-item-section avatar>
   	      <q-avatar color="primary" text-color="white">
-  	        {{ user.name.charAt(0) }}
+  	        U
   	      </q-avatar>
   	    </q-item-section>
 
