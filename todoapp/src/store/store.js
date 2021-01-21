@@ -1,7 +1,12 @@
 import { auth, db } from 'boot/firebase';
+import Vue from 'vue'
+
+let messagesRef;
+
 const state = {
+	messages: {},
 	userDetails: {},
-	users: {}
+	users: {},
 }
 const mutations = {
 	setUserDetails(state, data) {
@@ -10,6 +15,15 @@ const mutations = {
 	updateUser(state, data) {
 		Object.assign(state.users[data.userId], data.userDetails)
 	},
+	addUser(state, data) {
+		Vue.set(state.users, data.userId, data.userDetails)
+	},
+	addMessage(state, data) {
+		Vue.set(state.messages, data.messageId, data.messageDetails)
+	},
+	clearMessages(state) {
+		state.messages = {}
+	}
 }
 const actions = {
   registerUser({}, data) {
@@ -93,8 +107,36 @@ const actions = {
 	logoutUser() {
 		auth.signOut()
 	},
+	firebaseGetMessages({ commit, state }, otherUserId) {
+		let userId = state.userDetails.userId
+		messagesRef = firebaseDb.ref('chats/' + userId + '/' + otherUserId)
+		messagesRef.on('child_added', snapshot => {
+			let messageDetails = snapshot.val()
+			let messageId = snapshot.key
+			commit('addMessage', {
+				messageId,
+				messageDetails
+			})
+		})
+	},
+	firebaseStopGettingMessages({ commit }) {
+		if (messagesRef) {
+			messagesRef.off('child_added')
+			commit('clearMessages')
+		}
+	}
 };
-const getters = {};
+const getters = {
+	users: state => {
+		let usersFiltered = {}
+		Object.keys(state.users).forEach(key => {
+			if (key !== state.userDetails.userId) {
+				usersFiltered[key] = state.users[key]
+			}
+		})
+		return usersFiltered
+	}
+};
 export default{
 	namespaced: true,
   state,

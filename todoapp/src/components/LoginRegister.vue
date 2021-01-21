@@ -42,7 +42,7 @@ import { mapActions } from "vuex";
 			}
 		},
 		methods: {
-			...mapActions(['registerUser','loginUser']),
+			...mapActions('store' ,['registerUser','loginUser']),
 			submitForm() {
 				if (this.tab == 'login') {
 					this.loginUser(this.formData)
