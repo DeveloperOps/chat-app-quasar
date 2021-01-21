@@ -4,13 +4,16 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
-export default {
-  name: 'App',
-  methods: {
-    ...mapActions(['store' ,'handleAuthChange'])
-  },
-  beforeMount(){ this.handleAuthChange() }
-  
-};
+	import { mapActions } from 'vuex'
+	export default {
+	  methods: {
+	  	...mapActions('store', ['handleAuthStateChanged'])
+	  },
+	  mounted() {
+	  	this.handleAuthStateChanged()
+	  }
+	}
 </script>
+<style>
+</style>
+
